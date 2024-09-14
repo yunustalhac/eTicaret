@@ -1,0 +1,22 @@
+{
+  "sepetim": [
+    {
+      "id": 2,
+      "title": "Micro Backpack",
+      "img": "https://tailwindui.com/img/ecommerce-images/order-history-page-05-product-02.jpg",
+      "fiyat": "200",
+      "boyut": "sm",
+      "color": "gray",
+      "renk": "gri"
+    },
+    {
+      "id": 3,
+      "title": "Drawtop Canister",
+      "img": "https://tailwindui.com/img/ecommerce-images/order-history-page-05-product-03.jpg",
+      "fiyat": "250",
+      "boyut": "md",
+      "color": "darkorange",
+      "renk": "turuncu"
+    }
+  ]
+}

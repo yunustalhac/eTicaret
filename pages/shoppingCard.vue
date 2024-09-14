@@ -1,81 +1,133 @@
 <template>
-<!--  <nuxt-link to="/">-->
-<!--    <button class="bg-ligtPurple text-white py-3 px-4 rounded-lg w-1/6 absolute top-0 right-0">Ana Menü</button>-->
-<!--  </nuxt-link> -->
+  <div class="bg-bgPhoto">
+    <div class="flex flex-col gap-5 p-6 lg:py-0 lg:px-0">
+      <nuxt-link to="/" class="self-end mb-4">
+        <button
+            class="bg-purple-600 text-white py-2 px-4 rounded-lg hover:bg-purple-700 transition duration-300 ease-in-out">
+          Ana Menü
+        </button>
+      </nuxt-link>
 
-  <div class="flex flex-col gap-5">
-    <nuxt-link to="/">
-      <button class="bg-ligtPurple text-white py-2 rounded-lg w-1/3  absolute top-0 right-0">Ana Menü</button>
-    </nuxt-link>
 
-    <div class="relative">
-      <h1 class="text-4xl font-semibold border-b border-gray-300 pb-4 mb-6">Alışveriş Sepeti</h1>
+      <div class="relative">
+        <div class="flex flex-col lg:flex-row">
 
-      <div v-for="i in 3" class="flex gap-5 p-4 border-b border-gray-200 relative">
-        <img src="@/assets/icon/exit.svg"
-             @click="deleteCard"
-             class="absolute top-4 right-4 w-6 h-6 cursor-pointer hover:opacity-80 transition-opacity duration-200 active:scale-90">
+          <div>
+            <!--          <h1 class="text-3xl lg:text-4xl font-semibold border-b border-gray-300 pb-4 mb-6">Alışveriş Sepeti</h1>-->
 
-        <div class="w-1/4">
-          <img class="rounded-lg shadow-md"
-               src="https://tailwindui.com/img/ecommerce-images/category-page-01-image-card-02.jpg">
-        </div>
-        <div class="flex flex-col w-3/4 gap-3">
-          <span class="text-lg font-semibold text-gray-800 lg:text-xl">Not Kağıdı</span>
-          <div class="flex gap-2">
-            <small class="bg-gray-100 text-gray-600 px-2 py-1 rounded-full">Küçük Boy</small>
-            <small class="bg-gray-100 text-gray-600 px-2 py-1 rounded-full">Lacivert</small>
+            <div v-for="(item, index) in products" :key="index"
+                 class="relative flex flex-col md:flex-row gap-4 p-4 border-b border-gray-200 lg:w-2/3">
+              <!-- Çarpı simgesi burada konumlandırıldı -->
+              <img src="@/assets/icon/exit.svg"
+                   @click="deleteCard(item)"
+                   class="absolute right-4 w-6 h-6 cursor-pointer hover:opacity-80 transition-opacity duration-200 active:scale-90 z-10">
+
+              <div class="w-full md:w-full rounded-lg">
+                <img
+                    :src="item.img"
+                    :data-id="index"
+                    class=" object-cover rounded-lg transition-all hover:grayscale h-fit w-fit"
+                >
+              </div>
+              <div class="flex flex-col w-full md:w-3/4 gap-3">
+                <span class="text-lg lg:text-xl font-semibold text-gray-800">{{ item.title }}</span>
+                <div class="flex flex-col md:flex-row items-start lg:items-center justify-between">
+                  <div class="flex flex-col gap-1">
+                    <div class="flex gap-2">
+                      <small class="text-gray-600 bg-gray-100 px-2 py-1 rounded-full">{{ item.boyut }}</small>
+                      <small class="text-gray-600 bg-gray-100 px-2 py-1 rounded-full">{{ item.renk }}</small>
+                    </div>
+                    <span class="text-xl font-bold text-gray-900">{{ item.fiyat }}₺</span>
+                  </div>
+                  <select
+                      class="cursor-pointer block appearance-none bg-gray-100 border border-gray-300 rounded-lg px-3 py-1 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-blue-500 mt-2 md:mt-0 md:ml-4">
+                    <option v-for="i in 10" :key="i">{{ i }}</option>
+                  </select>
+                </div>
+
+                <div class="mt-2">
+                  <span v-if="true" class="text-green-500 font-semibold">Stokta Var</span>
+                  <span v-else class="text-red-500 font-semibold">Stokta Yok</span>
+                </div>
+              </div>
+            </div>
+
           </div>
-          <span class="text-xl font-bold text-gray-900">100₺</span>
-          <select
-              class="block w-full appearance-none bg-gray-100 border border-gray-300 rounded-lg py-2 px-4 pr-10 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-blue-500">
-            <option v-for="i in 10" :key="i">{{ i }}</option>
-          </select>
-
           <div class="">
-            <span v-if="true" class="text-green-500 font-semibold">Stokta Var</span>
-            <span v-else class="text-red-500 font-semibold">Stokta Yok</span>
+            <div
+                class="bg-gray-100 relative rounded-lg shadow-md flex flex-col gap-4 p-2 max-w-md mx-auto mt-6 lg:mt-0 lg:fixed w-full lg:h-lvh lg:bottom-0 lg:right-0 lg:border-2 lg:border-gray-200 lg:w-1/3 z-50 justify-center">
+              <div class="h-fit bg-white p-6 rounded-lg shadow-2xl shadow-gray-600">
+                <h1 class="text-xl lg:text-2xl font-bold text-gray-800 mb-5">Sipariş Özeti</h1>
+                <div class="flex flex-col gap-4">
+                  <div v-for="item in products"
+                       class="flex justify-between text-gray-700 border-b border-gray-300 pb-2">
+                    <span>{{ item.title }} Fiyatı</span>
+                    <span>{{ item.fiyat }}₺</span>
+                  </div>
+
+                  <!--                  <div class="flex justify-between text-gray-700 border-b border-gray-300 pb-2">-->
+                  <!--                    <span>Kargo Tutarı</span>-->
+                  <!--                    <span>200₺</span>-->
+                  <!--                  </div>-->
+
+                  <div class="flex justify-between font-bold text-gray-900">
+                    <span>Sipariş Toplam</span>
+                    <span>{{ totalPrice }}₺</span>
+                  </div>
+                  <button
+                      class="bg-purple-600 hover:bg-purple-700 text-white py-2 px-4 rounded-lg transition duration-300 ease-in-out">
+                    Ödeme Yap
+                  </button>
+                </div>
+              </div>
+            </div>
           </div>
+
         </div>
       </div>
-
-      <div
-          class="relative bg-white rounded-lg shadow-md flex flex-col gap-4 p-6 max-w-md mx-auto lg:fixed lg:bottom-0 lg:right-0 lg:border-2 lg:border-black lg:w-1/4">
-        <h1 class="text-2xl font-semibold text-gray-800">Sipariş Özeti</h1>
-        <div class="flex flex-col gap-4">
-          <div class="flex justify-between text-gray-700 border-b border-gray-300 pb-2">
-            <span>Ürünlerinizin Fiyatı</span>
-            <span>300₺</span>
-          </div>
-
-          <div class="flex justify-between text-gray-700 border-b border-gray-300 pb-2">
-            <span>Kargo Tutarı</span>
-            <span>200₺</span>
-          </div>
-
-          <div class="flex justify-between font-bold text-gray-900">
-            <span>Sipariş Toplam</span>
-            <span>500₺</span>
-          </div>
-          <button
-              class="bg-purple-600 hover:bg-purple-700 text-white py-2 px-4 rounded-lg transition duration-300 ease-in-out">
-            Ödeme Yap
-          </button>
-        </div>
-      </div>
-
     </div>
+
   </div>
 </template>
 
 <script setup lang="ts">
 
+
+import axios from "axios";
+
 definePageMeta({
   layout: 'master'
 });
 
-const deleteCard = () => {
-  deleteCard.style.display = 'none';
 
+const products = ref([]); // Reaktif bir array tanımla
+
+onMounted(() => {
+  axios.get('http://localhost:3000/sepetim/')
+      .then(response => {
+        products.value = response.data; // Gelen veriyi reaktif olarak ata
+      })
+      .catch(error => {
+        console.error('Hata:', error);
+      });
+});
+
+const deleteCard = (item) => {
+  axios.delete("http://localhost:3000/sepetim/" + item.id)
+      .then(() => {
+        // Ürünü products listesinden çıkarıyoruz
+        products.value = products.value.filter(product => product.id !== item.id);
+      })
+      .catch(error => {
+        console.error("Hata:", error);
+      });
 };
+
+
+
+const totalPrice = computed(() => {
+  return products.value.reduce((total, product) => {
+    return total + Number(product.fiyat);
+  }, 0);
+});
 </script>
